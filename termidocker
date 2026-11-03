@@ -1,0 +1,105 @@
+# Copyright 2026 Tu Nombre y colaboradores
+# SPDX-License-Identifier: GPL-2.0-only
+# Este programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos
+# de la Licencia Pública General GNU como publicada por la Free Software Foundation,
+# ya sea la versión 2 de la Licencia, o (a tu elección) cualquier versión posterior.
+
+#!/bin/bash
+
+# Alex
+# 11.02.2026
+
+# La idea es usar todos los comandos de docker
+# si necesidad de escribir "docker" delante, o
+# "sudo docker".
+#   MODO EXCLUSIVO:
+#       todo lo que escribas llevará "sudo docker"
+#       delante, solo sirve para docker.
+#   MODO HIBRIDO:
+#       solo se reconocerán las instrucciones
+#       docker. Si es docker se usa docker, si
+#       no se reconoce como una instruccion docker
+#       se ejecuta sin "sudo docker" delante.
+#
+#   (funcional)
+#
+#   Mejoras
+#       17.02.2026 -> En con color la flecha '>' para el comando
+#
+#   Idea mejora:
+#    - Convertir todas las comillas dobles en simples
+#      para la entrada.
+#    - Mirar si se puede hacer que se pueda usar el cursor
+#    - Eliminar saltos de linea de la entrada
+#    - Intro sin entrada = nada, no repetir el bash
+#    - Hacer persistente el historial
+
+
+
+# color-valor-letra-fondo
+# Negro   0   30  40
+# Rojo    1   31  41
+# Verde   2   32  42
+# Amarillo3   33  43
+# Azul    4   34  44
+# Morado  5   35  45
+# Cian    6   36  46
+# Gris    7   37  47
+# Blanco  8   38  48
+# -RESET- 9   39  49
+#
+# estilo de letra
+# Normal/Defecto      0
+# Negrita             1
+# Atenuado            2
+# Cursiva             3
+# Subrayado           4
+# Parpadeo            5
+# Parpadeo intenso    6
+# Invertido           7
+# Oculto              8
+# Tachado             9
+
+
+#COLORES
+normal="\e[0m"
+colorDocker="\e[1;37;46m"
+colorBash="\e[1;43;37m"
+colorComando="\e[1;41;37m"
+
+#Elegir modo:
+echo -e "\n\tEscribe 'x' para modo exclusivo (solo docker)"
+echo -e "\tEscribe 'h' para modo hibrido (docker+terminal)"
+echo -e -n "\tPulsa enter (vacío == 'h'): "
+read modo
+echo -e "\n\tEscribe \"exit\" para salir...\n"
+
+#Bucle principal
+for((;;)); do
+    #Obtenemos primera palabra
+    echo -n -e "$colorComando>$normal"
+    read instruccion
+    orden1=$(echo $instruccion | cut -d " " -f 1)
+
+    if [[ "$modo" == "x" ]]; then
+        orden1="run"
+    fi
+
+    #empieza el switch
+    case $orden1 in
+        #run | exec | rm | rmi | image | images | ps | pull | push | commit)
+        run | exec | ps | build | bake | pull | push | images | login | logout | search | version | info | builder | buildx | compose | container | context | image | manifest | network | plugin | system | volume | swarm | attach | commit | cp | create | diff | events | export | history | import | inspect | kill | load | logs | pause | port | rename | restart | rm | rmi | save | start | stats | stop | tag | top | unpause | update | wait )
+            #comando de docker
+            echo -e "$colorDocker^DOCKER>$normal sudo docker $instruccion"
+            eval "sudo docker $instruccion"
+            ;;
+
+        exit)
+            exit
+            ;;
+        *)
+            echo -e "$colorBash^BASH>$normal $instruccion"
+            eval '$instruccion'
+            ;;
+    esac
+done
