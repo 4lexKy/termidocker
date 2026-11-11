@@ -1,4 +1,4 @@
-[Versión 0.6.2]: #
+[Versión 0.7.2]: #
 # termidocker - Usa los comandos de docker directamente en la terminal
 
 Los comandos de docker son mayormente distintos a los de bash, por lo que al ejecutar este programa se podrá llamar a los comandos sin usar "docker" antes del comando.
@@ -9,6 +9,12 @@ Los comandos de docker son mayormente distintos a los de bash, por lo que al eje
 Actualmente funciona.
 
 La entrada necesita mejorarse ya que no contempla el autocompletado con tabulador o el historial de comandos con las flechas arriba y abajo.
+
+### Ficheros
+- termidocker: fichero del código principal
+- LICENSE: contenido de la licencia
+- README.md: información del proyecto
+- .gitignore: define elementos a ignorar
 
 ---
 ## Instalación
@@ -55,7 +61,9 @@ Para un uso mas ágil se puede crear una carpeta para script de forma que todos 
 
 Esto se puede conseguir añadiendo a ~/.bashrc la línea:
 
->export PATH=$PATH:/ruta/a/carpeta/con/scripts
+```bash
+    export PATH=$PATH:/ruta/a/carpeta/con/scripts
+```
 
 ---
 ## Licencia
@@ -63,5 +71,8 @@ Este proyecto está licenciado bajo GPLv2 - consulta el archivo LICENSE para má
 
 ---
 ## Autor
-    [Alex](github.com/4lexKy)
+>**Alex**
+- Github: [https://github.com/4lexKy](https://github.com/4lexKy)
+- Email: [alex.correu@pm.me](mailto:alex.correu@pm.me)
+
 ---
